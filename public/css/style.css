@@ -342,6 +342,7 @@ img {
 }
 
 
+/* Pagination */
 .pagination {
     font-size: 1.3rem;
     color: var(--gray);
