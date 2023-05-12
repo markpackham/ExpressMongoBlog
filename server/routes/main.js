@@ -13,13 +13,14 @@ router.get("/", async (req, res) => {
       description: "EJS template, Express and Mongo built Blog",
     };
 
-    let perPage = 10;
+    // Only show 7 posts at a time
+    let perPage = 7;
     // set default page to 1 if we don't have more pages
     let page = req.query.page || 1;
 
     const data = await Post.aggregate([{ $sort: { createdAt: -1 } }])
       .skip(
-        // jump every 10 pages in our pagination
+        // jump every 7 posts in our pagination
         perPage * page - perPage
       )
       .limit(perPage)
@@ -29,7 +30,12 @@ router.get("/", async (req, res) => {
     const nextPage = parseInt(page) + 1;
     const hasNextPage = nextPage <= Math.ceil(count / perPage);
 
-    res.render("index", { locals, data });
+    res.render("index", {
+      locals,
+      data,
+      current: page,
+      nextPage: hasNextPage ? nextPage : null,
+    });
   } catch (error) {
     console.log(error);
   }
