@@ -7,13 +7,28 @@ const Post = require("../models/Post");
 // GET
 // Home
 router.get("/", async (req, res) => {
-  const locals = {
-    title: "EJS, Express and Mongo Blog",
-    description: "EJS template, Express and Mongo built Blog",
-  };
-
   try {
-    const data = await Post.find();
+    const locals = {
+      title: "EJS, Express and Mongo Blog",
+      description: "EJS template, Express and Mongo built Blog",
+    };
+
+    let perPage = 10;
+    // set default page to 1 if we don't have more pages
+    let page = req.query.page || 1;
+
+    const data = await Post.aggregate([{ $sort: { createdAt: -1 } }])
+      .skip(
+        // jump every 10 pages in our pagination
+        perPage * page - perPage
+      )
+      .limit(perPage)
+      .exec();
+
+    const count = await Post.count();
+    const nextPage = parseInt(page) + 1;
+    const hasNextPage = nextPage <= Math.ceil(count / perPage);
+
     res.render("index", { locals, data });
   } catch (error) {
     console.log(error);
@@ -29,6 +44,21 @@ router.get("/about", (req, res) => {
 router.get("/contact", (req, res) => {
   res.render("contact");
 });
+
+// GET Home (simpler pre pagination version)
+// router.get("/", async (req, res) => {
+//   const locals = {
+//     title: "EJS, Express and Mongo Blog",
+//     description: "EJS template, Express and Mongo built Blog",
+//   };
+
+//   try {
+//     const data = await Post.find();
+//     res.render("index", { locals, data });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 // Insert Dummy Data
 // function insertPostData() {
