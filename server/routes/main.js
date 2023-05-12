@@ -6,13 +6,18 @@ const Post = require("../models/Post");
 
 // GET
 // Home
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   const locals = {
     title: "EJS, Express and Mongo Blog",
     description: "EJS template, Express and Mongo built Blog",
   };
 
-  res.render("index", { locals });
+  try {
+    const data = await Post.find();
+    res.render("index", { locals, data });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // About
