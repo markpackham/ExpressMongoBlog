@@ -66,6 +66,24 @@ router.get("/contact", (req, res) => {
 //   }
 // });
 
+// GET
+// Post: id
+router.get("/post/:id", async (req, res) => {
+  try {
+    const locals = {
+      title: "EJS, Express and Mongo Blog",
+      description: "EJS template, Express and Mongo built Blog",
+    };
+
+    let slug = req.params.id;
+
+    const data = await Post.findById({ _id: slug });
+    res.render("index", { locals, data });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 // Insert Dummy Data
 // function insertPostData() {
 //   Post.insertMany([
