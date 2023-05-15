@@ -70,14 +70,14 @@ router.get("/contact", (req, res) => {
 // Post: id
 router.get("/post/:id", async (req, res) => {
   try {
-    const locals = {
-      title: "EJS, Express and Mongo Blog",
-      description: "EJS template, Express and Mongo built Blog",
-    };
-
     let slug = req.params.id;
 
     const data = await Post.findById({ _id: slug });
+
+    const locals = {
+      title: data.title,
+    };
+
     res.render("post", { locals, data });
   } catch (error) {
     console.log(error);
