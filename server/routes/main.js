@@ -84,6 +84,26 @@ router.get("/post/:id", async (req, res) => {
   }
 });
 
+// POST
+// Post Search
+router.post("/search", async (req, res) => {
+  try {
+    const locals = {
+      title: "Search",
+    };
+
+    let searchTerm = req.body.searchTerm;
+
+    console.log(searchTerm);
+    res.send(searchTerm);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//
+//
+//
 // Insert Dummy Data
 // function insertPostData() {
 //   Post.insertMany([
