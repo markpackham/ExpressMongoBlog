@@ -78,7 +78,7 @@ router.get("/post/:id", async (req, res) => {
     let slug = req.params.id;
 
     const data = await Post.findById({ _id: slug });
-    res.render("index", { locals, data });
+    res.render("post", { locals, data });
   } catch (error) {
     console.log(error);
   }
