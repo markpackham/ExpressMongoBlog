@@ -20,4 +20,17 @@ router.get("/admin", async (req, res) => {
   }
 });
 
+// POST
+// Admin Check Login
+router.post("/admin", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    console.log(req.body);
+
+    res.redirect("/admin");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;
