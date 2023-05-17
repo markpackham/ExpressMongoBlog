@@ -44,9 +44,16 @@ router.post("/admin", async (req, res) => {
     // JWT_SECRET=MySecretBlog from .env
     const token = jwt.sign({ userId: user._id }, jwtSecret);
     res.cookie("token", token, { httpOnly: true });
+    res.redirect("/dashboard");
   } catch (error) {
     console.log(error);
   }
+});
+
+// POST
+// Admin Check Login
+router.get("/dashboard", async (req, res) => {
+  res.render("admin/dashboard");
 });
 
 // POST
