@@ -22,6 +22,10 @@ app.use(
     secret: "keyboard cat",
     resave: false,
     saveUnitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+    }),
+    // cookie: {maxAge: new Date (Date.now() + (36000000))}
   })
 );
 
