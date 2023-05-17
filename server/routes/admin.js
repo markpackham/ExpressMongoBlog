@@ -49,9 +49,9 @@ router.post("/register", async (req, res) => {
       if (error.code === 11000) {
         // 409 is a Conflict
         // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
-        res.status(409).json({ message: "User already in user" });
+        res.status(409).json({ message: "User already in use" });
       }
-      res.status(500).json({ message: "Internal Server Error" });
+      res.status(500).json({ message: "Internal server error" });
     }
   } catch (error) {
     console.log(error);
