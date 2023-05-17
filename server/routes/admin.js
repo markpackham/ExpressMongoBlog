@@ -40,9 +40,19 @@ router.post("/admin", async (req, res) => {
 router.post("/register", async (req, res) => {
   try {
     const { username, password } = req.body;
-    console.log(req.body);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    res.redirect("/admin");
+    try {
+      const user = await User.create({ username, password: hashedPassword });
+      res.status(201).json({ message: "User Created", user });
+    } catch (error) {
+      if (error.code === 11000) {
+        // 409 is a Conflict
+        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/409
+        res.status(409).json({ message: "User already in user" });
+      }
+      res.status(500).json({ message: "Internal Server Error" });
+    }
   } catch (error) {
     console.log(error);
   }
