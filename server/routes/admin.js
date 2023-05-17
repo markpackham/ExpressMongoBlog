@@ -1,12 +1,29 @@
 const express = require("express");
 const router = express.Router();
-const Post = require("../models/Post");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const adminLayout = "../views/layouts/admin";
 const jwtSecret = process.env.JWT_SECRET;
+
+// GET
+// Check Login
+const authMiddleware = (req, res, next) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, jwtSecret);
+    req.userId = decoded.userId;
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+};
 
 // GET
 // Admin Login
@@ -52,7 +69,8 @@ router.post("/admin", async (req, res) => {
 
 // POST
 // Admin Check Login
-router.get("/dashboard", async (req, res) => {
+// Only a logged in use can access this thanks to authMiddleware
+router.get("/dashboard", authMiddleware, async (req, res) => {
   res.render("admin/dashboard");
 });
 
