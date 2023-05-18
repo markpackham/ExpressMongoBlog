@@ -75,6 +75,22 @@ router.get("/dashboard", authMiddleware, async (req, res) => {
 });
 
 // POST
+// Admin Dashboard
+router.get("/dashboard", authMiddleware, async (req, res) => {
+  try {
+    const locals = {
+      title: "Dashboard",
+      description: "Administrator section",
+    };
+    const data = await Post.find();
+    res.render("admin/dashboard", { locals, data });
+  } catch (error) {}
+});
+
+//
+//
+// Only 1 admin is needed for now
+// POST
 // Admin Register
 // router.post("/register", async (req, res) => {
 //   try {
