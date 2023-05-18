@@ -111,6 +111,18 @@ router.get("/add-post", authMiddleware, async (req, res) => {
   }
 });
 
+/**
+ * POST /
+ * Admin Create New Post
+ */
+router.post("/add-post", authMiddleware, async (req, res) => {
+  try {
+    console.log(req.body);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 //
 //
 // Only 1 admin is needed for now
