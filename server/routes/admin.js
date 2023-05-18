@@ -94,6 +94,12 @@ router.get("/dashboard", authMiddleware, async (req, res) => {
     console.log(error);
   }
 });
+
+/**
+ * GET /
+ * Admin Create New Post
+ */
+
 //
 //
 // Only 1 admin is needed for now
