@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const Post = require("../models/Post");
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -21,7 +22,7 @@ const authMiddleware = (req, res, next) => {
     req.userId = decoded.userId;
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Unauthorized" });
+    res.status(401).json({ message: "Unauthorized" });
   }
 };
 
