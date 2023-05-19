@@ -2,6 +2,8 @@ require("dotenv").config();
 
 const express = require("express");
 const expressLayout = require("express-ejs-layouts");
+// needed to allow PUT to be used
+const methodOverride = require("method-override");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -17,6 +19,7 @@ connectDB();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(methodOverride("_method"));
 
 app.use(
   session({
