@@ -35,6 +35,7 @@ router.get("/", async (req, res) => {
       data,
       current: page,
       nextPage: hasNextPage ? nextPage : null,
+      currentRoute: "/",
     });
   } catch (error) {
     console.log(error);
@@ -43,12 +44,12 @@ router.get("/", async (req, res) => {
 
 // About
 router.get("/about", (req, res) => {
-  res.render("about");
+  res.render("about", { currentRoute: `/about` });
 });
 
 // Contact
 router.get("/contact", (req, res) => {
-  res.render("contact");
+  res.render("contact", { currentRoute: `/contact` });
 });
 
 // GET Home (simpler pre pagination version)
@@ -78,7 +79,7 @@ router.get("/post/:id", async (req, res) => {
       title: data.title,
     };
 
-    res.render("post", { locals, data });
+    res.render("post", { locals, data, currentRoute: `/post/${slug}` });
   } catch (error) {
     console.log(error);
   }
