@@ -132,6 +132,23 @@ router.post("/add-post", authMiddleware, async (req, res) => {
   }
 });
 
+/**
+ * PUT /
+ * Admin Update Post
+ */
+router.put("/edit-post/:id", authMiddleware, async (req, res) => {
+  try {
+    await Post.findByIdAndUpdate(req.params.id, {
+      title: req.body.title,
+      body: req.body.body,
+      updatedAt: Date.now(),
+    });
+    res.redirect(`/edit-post/${req.params.id}`);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 //
 //
 // Only 1 admin is needed for now
