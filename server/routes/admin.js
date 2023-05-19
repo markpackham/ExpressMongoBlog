@@ -171,6 +171,19 @@ router.put("/edit-post/:id", authMiddleware, async (req, res) => {
   }
 });
 
+/**
+ * DELETE /
+ * Admin Delete Post
+ */
+router.delete("/delete-post/:id", authMiddleware, async (req, res) => {
+  try {
+    await Post.deleteOne({ _id: req.params.id });
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 //
 //
 // Only 1 admin is needed for now
